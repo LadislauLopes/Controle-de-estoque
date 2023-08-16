@@ -2,6 +2,8 @@ import tkinter as tk
 from ttkbootstrap import Style
 from tela_muda_tema import TelaMudaTema
 from tela_cadastro import TelaCadastro
+from tela_login import TelaLogin
+
 
 class Tela(tk.Tk):
     def __init__(self):
@@ -17,7 +19,7 @@ class Tela(tk.Tk):
         self.label_tema = tk.Label(self, text="Controle de Estoque - Ladislau", font=("Helvetica", 20, "bold"))
         self.label_tema.place(relx=0.1, rely=0.1) 
 
-        self.botao_Login = tk.Button(self, text='Login', width=20, height=4, font=("Helvetica", 20, "bold"), command=self.acao_botao)
+        self.botao_Login = tk.Button(self, text='Login', width=20, height=4, font=("Helvetica", 20, "bold"), command=self.tela_Login)
         self.botao_Login.place(relx=0.2, rely=0.465)
 
         self.botao_Cadastro = tk.Button(self, text='Cadastro', width=20, height=4, font=("Helvetica", 20, "bold"), command=self.tela_cadastro)
@@ -42,6 +44,10 @@ class Tela(tk.Tk):
     def tela_cadastro(self):
         self.withdraw()
         self.toplevel = TelaCadastro(self)
+
+    def tela_Login(self):
+        self.withdraw()
+        self.toplevel = TelaLogin(self)
 
     def tela_muda_tema(self):
         self.withdraw()

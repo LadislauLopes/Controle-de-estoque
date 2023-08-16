@@ -9,7 +9,7 @@ class TelaMudaTema(tk.Toplevel):
         self.temas = [
             "cosmo", "flatly", "litera", "minty", "lumen", "sandstone", "yeti",
             "pulse", "united", "morph", "journal", "darkly", "superhero", "solar",
-            "cyborg", "vapor", "cerculean"  # Removido "simplex"
+            "cyborg", "vapor", "cerculean",'simplex'  # Removido "simplex"
         ]
         self.selecionar_tema = tk.StringVar()
         self.criar_interface()
