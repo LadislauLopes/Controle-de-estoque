@@ -6,6 +6,7 @@ class TelaMudaTema(tk.Toplevel):
         self.title('Altera tema')
         self.geometry("960x300")
         self.parent = parent
+        self.protocol("WM_DELETE_WINDOW", self.fechar_aplicacao)
         self.temas = [
             "cosmo", "flatly", "litera", "minty", "lumen", "sandstone", "yeti",
             "pulse", "united", "morph", "journal", "darkly", "superhero", "solar",
@@ -34,3 +35,5 @@ class TelaMudaTema(tk.Toplevel):
     def voltar(self):
         self.destroy()
         self.parent.deiconify()
+    def fechar_aplicacao(self):
+        self.parent.destroy()

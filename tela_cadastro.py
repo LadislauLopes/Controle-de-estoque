@@ -8,6 +8,7 @@ class TelaCadastro(tk.Toplevel):
         self.geometry("600x500")  # Ajuste o tamanho da janela
         self.resizable(False, False)
         self.parent = parent
+        self.protocol("WM_DELETE_WINDOW", self.fechar_aplicacao)
         self.criar_interface()
 
     def criar_interface(self):
@@ -82,3 +83,5 @@ class TelaCadastro(tk.Toplevel):
         self.destroy()
         self.parent.deiconify()
 
+    def fechar_aplicacao(self):
+        self.parent.destroy()

@@ -16,16 +16,16 @@ class Tela(tk.Tk):
         self.primeiro_frame()
 
     def primeiro_frame(self):
-        self.label_tema = tk.Label(self, text="Controle de Estoque - Ladislau", font=("Helvetica", 20, "bold"))
+        self.label_tema = tk.Label(self, text="Controle de Estoque - Ladislau", font=("Arial", 20, "bold"))
         self.label_tema.place(relx=0.1, rely=0.1) 
 
-        self.botao_Login = tk.Button(self, text='Login', width=20, height=4, font=("Helvetica", 20, "bold"), command=self.tela_Login)
+        self.botao_Login = tk.Button(self, text='Login', width=20, height=4, font=("Arial", 20, "bold"), command=self.tela_Login)
         self.botao_Login.place(relx=0.2, rely=0.465)
 
-        self.botao_Cadastro = tk.Button(self, text='Cadastro', width=20, height=4, font=("Helvetica", 20, "bold"), command=self.tela_cadastro)
+        self.botao_Cadastro = tk.Button(self, text='Cadastro', width=20, height=4, font=("Arial", 20, "bold"), command=self.tela_cadastro)
         self.botao_Cadastro.place(relx=0.6, rely=0.465)
 
-        self.botao_Muda_Tema = tk.Button(self, text='Mudar tema', width=20, height=2, font=("Helvetica", 10, "bold"), command=self.tela_muda_tema)
+        self.botao_Muda_Tema = tk.Button(self, text='Mudar tema', width=20, height=2, font=("Arial", 10, "bold"), command=self.tela_muda_tema)
         self.botao_Muda_Tema.place(relx=0.8, rely=0.865)
 
     def mudar_tema(self):
@@ -52,6 +52,8 @@ class Tela(tk.Tk):
     def tela_muda_tema(self):
         self.withdraw()
         self.toplevel = TelaMudaTema(self)
+
+
 
 if __name__ == "__main__":
     app = Tela()

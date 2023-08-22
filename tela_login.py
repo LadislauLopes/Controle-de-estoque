@@ -8,6 +8,7 @@ class TelaLogin(tk.Toplevel):
         self.geometry("500x400")  # Ajuste o tamanho da janela
         self.resizable(False, False)
         self.parent = parent
+        self.protocol("WM_DELETE_WINDOW", self.fechar_aplicacao)
         self.criar_interface()
 
     def criar_interface(self):
@@ -62,3 +63,7 @@ class TelaLogin(tk.Toplevel):
         self.destroy()
         self.parent.deiconify()
 
+    def fechar_aplicacao(self):
+        # Implemente a função que fecha a aplicação inteira
+        # Por exemplo, você pode adicionar código aqui para salvar dados ou fazer outras operações de limpeza, se necessário
+        self.parent.destroy()
