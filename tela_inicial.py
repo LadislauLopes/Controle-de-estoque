@@ -8,7 +8,7 @@ from tela_login import TelaLogin
 class Tela(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Atividade Limeira")
+        self.title("ArmazenaTI")
         self.geometry("1280x720")
         self.resizable(False, False) 
         self.tema_atual = "vapor"
@@ -16,7 +16,7 @@ class Tela(tk.Tk):
         self.primeiro_frame()
 
     def primeiro_frame(self):
-        self.label_tema = tk.Label(self, text="Controle de Estoque - Ladislau", font=("Arial", 20, "bold"))
+        self.label_tema = tk.Label(self, text="ArmazenaTI", font=("Arial", 20, "bold"))
         self.label_tema.place(relx=0.1, rely=0.1) 
 
         self.botao_Login = tk.Button(self, text='Login', width=20, height=4, font=("Arial", 20, "bold"), command=self.tela_Login)
