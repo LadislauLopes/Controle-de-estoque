@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tela_home import TelaHome
 
 class TelaLogin(tk.Toplevel):
     def __init__(self, parent):
@@ -55,15 +56,19 @@ class TelaLogin(tk.Toplevel):
 
         # Simulação de verificação de credenciais
         if usuario == "usuario" and senha == "senha":
-            messagebox.showinfo("Sucesso", "Login realizado com sucesso!")
+            self.acesso_liberado()
         else:
             messagebox.showerror("Erro", "Credenciais inválidas.")
 
+
+    def acesso_liberado(self):
+        self.withdraw()
+        self.toplevel = TelaHome(self)
+        
     def voltar(self):
         self.destroy()
         self.parent.deiconify()
 
     def fechar_aplicacao(self):
-        # Implemente a função que fecha a aplicação inteira
-        # Por exemplo, você pode adicionar código aqui para salvar dados ou fazer outras operações de limpeza, se necessário
         self.parent.destroy()
+
