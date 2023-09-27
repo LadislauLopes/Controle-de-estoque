@@ -1,18 +1,26 @@
 import tkinter as tk
 from tkinter import messagebox
+import sqlite3
+from hashlib import sha256
+
 
 class TelaCadastro(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title('Cadastro de Usuário')
-        self.geometry("600x500")  # Ajuste o tamanho da janela
+        self.geometry("600x500")  
         self.resizable(False, False)
         self.parent = parent
         self.protocol("WM_DELETE_WINDOW", self.fechar_aplicacao)
+
+
+        
+        self.db_connection = self.conectar_ao_bd()
+
         self.criar_interface()
 
     def criar_interface(self):
-        # Aumente o tamanho da fonte
+        
         fonte = ("Arial", 14)
 
         # Labels
@@ -38,27 +46,24 @@ class TelaCadastro(tk.Toplevel):
         # Botão de Voltar
         botao_voltar = tk.Button(self, text="Voltar", font=fonte, command=self.voltar)
 
-        # Adicione um espaçamento maior entre o primeiro componente e a borda da janela
-        espacamento_superior = tk.Label(self, text="", font=fonte)
-        espacamento_superior.grid(row=0, column=0, padx=10, pady=20)
-
         # Posicionamento dos elementos na grade
-        label_nome.grid(row=1, column=0, padx=10, pady=10)
-        entry_nome.grid(row=1, column=1, padx=10, pady=10)
-        label_usuario.grid(row=2, column=0, padx=10, pady=10)
-        entry_usuario.grid(row=2, column=1, padx=10, pady=10)
-        label_matricula.grid(row=3, column=0, padx=10, pady=10)
-        entry_matricula.grid(row=3, column=1, padx=10, pady=10)
-        label_senha.grid(row=4, column=0, padx=10, pady=10)
-        entry_senha.grid(row=4, column=1, padx=10, pady=10)
-        label_confirma_senha.grid(row=5, column=0, padx=10, pady=10)
-        entry_confirma_senha.grid(row=5, column=1, padx=10, pady=10)
-        label_gerente_senha.grid(row=6, column=0, padx=10, pady=10)
-        entry_gerente_senha.grid(row=6, column=1, padx=10, pady=10)
-        botao_cadastrar.grid(row=7, column=1, padx=10, pady=30)
-        botao_voltar.grid(row=7, column=2, padx=10, pady=30)
+        label_nome.grid(row=1, column=0, padx=20, pady=10)
+        entry_nome.grid(row=1, column=1, padx=20, pady=10)
+        label_usuario.grid(row=2, column=0, padx=20, pady=10)
+        entry_usuario.grid(row=2, column=1, padx=20, pady=10)
+        label_matricula.grid(row=3, column=0, padx=20, pady=10)
+        entry_matricula.grid(row=3, column=1, padx=20, pady=10)
+        label_senha.grid(row=4, column=0, padx=20, pady=10)
+        entry_senha.grid(row=4, column=1, padx=20, pady=10)
+        label_confirma_senha.grid(row=5, column=0, padx=20, pady=10)
+        entry_confirma_senha.grid(row=5, column=1, padx=20, pady=10)
+        label_gerente_senha.grid(row=6, column=0, padx=20, pady=10)
+        entry_gerente_senha.grid(row=6, column=1, padx=20, pady=10)
+        botao_cadastrar.grid(row=7, column=1, padx=20, pady=30)
+        botao_voltar.grid(row=7, column=2, padx=20, pady=30)
 
-        # Centralizar a janela na tela
+        
+       
         self.update_idletasks()
         width = self.winfo_width()
         height = self.winfo_height()
@@ -74,14 +79,37 @@ class TelaCadastro(tk.Toplevel):
         elif senha != confirma_senha:
             messagebox.showerror("Erro", "As senhas não coincidem.")
             return
-        elif senha_gerente != 'NTIPFAC':
+        elif senha_gerente != 'TESI2':
             messagebox.showerror("Erro", "Senha do gerente incorreta")
             return
-        messagebox.showinfo("Cadastro", "Usuário cadastrado com sucesso!")
+
+        senha = sha256(senha.encode()).hexdigest()
+        # Inserir dados na tabela de usuários
+        try:
+            cursor = self.db_connection.cursor()
+            sql = "INSERT INTO usuario (user_name, user_login, user_registration, user_password, user_theme) VALUES (?, ?, ?, ?, ?)"
+            val = (nome, usuario.upper().strip(), matricula, senha, self.parent.style.theme_use() )  
+            cursor.execute(sql, val)
+            self.db_connection.commit()
+            cursor.close()
+            messagebox.showinfo("Cadastro", "Usuário cadastrado com sucesso!")
+        except sqlite3.Error as err:
+            print(f"Erro no banco de dados: {err}")
+            messagebox.showerror("Erro", "Ocorreu um erro no banco de dados.")
 
     def voltar(self):
         self.destroy()
         self.parent.deiconify()
 
     def fechar_aplicacao(self):
-        self.parent.destroy()
+        self.parent.fechar_aplicacao()
+
+    def conectar_ao_bd(self):
+        try:
+            conn = sqlite3.connect("estoque.db")
+            return conn
+        except sqlite3.Error as err:
+            print(f"Erro na conexão com o banco de dados: {err}")
+            messagebox.showerror("Erro", "Ocorreu um erro na conexão com o banco de dados.")
+            self.fechar_aplicacao()
+
